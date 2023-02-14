@@ -1,6 +1,11 @@
+import { Fragment } from "react";
+import MainPage from "./pages/MainPage/MainPage";
+
 function App() {
   return (
-    <h1>This is reactive chat</h1>
+    <Fragment>
+      <MainPage />
+    </Fragment>
   );
 }
 
