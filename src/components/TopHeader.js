@@ -19,7 +19,7 @@ const TopHeader = () => {
     >
       <Row className="d-flex flex-row">{wordsList}</Row>
       <Row style={{justifySelf: 'flex-end'}}>
-        <Button onClick={removeWord} style={{ justifySelf: "flex-end" }}>
+        <Button onClick={removeWord} className={classes.delete}>
           Delete
         </Button>
       </Row>
