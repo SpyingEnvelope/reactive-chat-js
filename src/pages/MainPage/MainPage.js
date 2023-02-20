@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+
 import { Container } from "react-bootstrap";
 import TopHeader from "../../components/TopHeader";
 import WordsArea from "../../components/WordsArea";
