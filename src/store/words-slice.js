@@ -7,7 +7,7 @@ const wordsSlice = createSlice({
     },
     reducers: {
         addWord(state, action) {
-            state.words = [...state.words, action.payload.word]
+            state.words = [...state.words, action.payload]
         },
         removeWord(state, action) {
             let newWords = [...state.words];

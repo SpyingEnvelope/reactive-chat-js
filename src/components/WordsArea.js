@@ -1,17 +1,22 @@
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Image, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { wordsActions } from "../store/words-slice";
-import { SayButton } from "react-say";
-import Say from "react-say/lib/Say";
+import { useSpeechSynthesis } from "react-speech-kit";
+import classes from "./WordsArea.module.css";
+import dummy_db from "./dummy_db";
 
 const WordsArea = () => {
+  const { speak, cancel } = useSpeechSynthesis();
+
   const dispatch = useDispatch();
 
   const addWord = (word) => {
-    dispatch(wordsActions.addWord({ word }));
+    speak({ text: word.text });
+    dispatch(wordsActions.addWord({ word: word.text, image: word.image }));
   };
 
   const removeWord = () => {
+    cancel();
     dispatch(wordsActions.removeWord());
   };
 
@@ -19,19 +24,31 @@ const WordsArea = () => {
     dispatch(wordsActions.removeAllWords());
   };
 
-  return (
-    <Container fluid className="h-75" style={{ backgroundColor: "blue" }}>
+  const word_buttons = dummy_db.map((word) => {
+    return (
       <Button
-        onClick={() => {
-          addWord("Listen");
-        }}
-        as={SayButton}
-        text='Listen'
+        onClick={() => word.visible ? addWord({ text: word.text, image: word.image }) : null}
+        className={classes.wordbutton}
+        variant="light"
+        key={word.text}
       >
-        Listen
+        {word.visible ? 
+        <>
+        <Row>
+          <Image src={word.image} style={{ width: "15vh", height: '9vh' }} />
+        </Row>
+        <Row>{word.text}</Row> </> : null}
       </Button>
-      <Button onClick={removeWord}>Remove word</Button>
-      <Button onClick={removeAllWords}>Remove all words</Button>
+    );
+  });
+
+  return (
+    <Container
+      fluid
+      className="h-75 d-flex"
+      style={{ border: '1px solid black', backgroundColor: 'yellow', paddingTop: '10px' }}
+    >
+      {word_buttons}
     </Container>
   );
 };

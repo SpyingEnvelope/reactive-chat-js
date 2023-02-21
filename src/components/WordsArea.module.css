@@ -1,0 +1,10 @@
+.wordbutton {
+    width: 20vh;
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black !important;
+    border-radius: 0px !important;
+}

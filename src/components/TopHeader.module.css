@@ -5,8 +5,9 @@
 .delete {
     position: fixed;
     width: 5% !important;
-    height: 25%;
+    height: 10%;
+    transform: translateY(50%) translateX(-20%);
     right: 0;
     top: 0;
-
+    opacity: 0.5
 }
