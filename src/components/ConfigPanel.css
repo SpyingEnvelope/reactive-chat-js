@@ -1,0 +1,13 @@
+.container-background {
+    background-color: gray;
+}
+
+.edit-button {
+    background: none;
+    color: white;
+    border: none;
+}
+
+.container-10 {
+    height: 5vh
+}

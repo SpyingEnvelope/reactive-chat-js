@@ -1,7 +1,9 @@
-import { Container, Row, Button, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { wordsActions } from "../store/words-slice";
 import { useSpeechSynthesis } from "react-speech-kit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import classes from "./TopHeader.module.css";
 
 const TopHeader = () => {
@@ -23,7 +25,7 @@ const TopHeader = () => {
         className="d-flex flex-column text-center"
         key={Math.random()}
       >
-        <Image src={word.image} style={{ width: "8vw", height: "13vh" }} />
+        <Image src={word.image} style={{ width: "8vw", height: "10vh" }} />
         {word.word}
       </Col>
     );
@@ -32,16 +34,16 @@ const TopHeader = () => {
   return (
     <Container
       fluid
-      className="d-flex h-25"
-      style={{ border: "1px solid black" }}
+      className="d-flex"
+      style={{ border: "1px solid black", height: '20vh' }}
     >
       <Row className="d-flex flex-row overflow-scroll flex-nowrap">
         {displayWords}
       </Row>
       <Row style={{ justifySelf: "flex-end" }}>
-        <Button onClick={removeWord} className={classes.delete} variant="light">
-          Delete
-        </Button>
+        <button onClick={removeWord} className={classes.delete}>
+          <FontAwesomeIcon icon={faDeleteLeft} className={classes.deleteicon}/>
+        </button>
       </Row>
     </Container>
   );

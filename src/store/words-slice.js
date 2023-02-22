@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import dummy_db from "../components/dummy_db";
 
 const wordsSlice = createSlice({
     name: "words",
     initialState: {
-        words: []
+        words: [],
+        coreBoard: dummy_db,
+        edit: false
     },
     reducers: {
         addWord(state, action) {
@@ -11,11 +14,14 @@ const wordsSlice = createSlice({
         },
         removeWord(state, action) {
             let newWords = [...state.words];
-            let popped = newWords.pop();
+            newWords.pop();
             state.words = newWords;
         },
         removeAllWords(state, action) {
             state.words = [];
+        },
+        changeEdit(state, action) {
+            state.edit = action.payload;
         }
     }
 });
