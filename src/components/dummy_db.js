@@ -6,6 +6,11 @@ export default [
         image: 'https://storage.googleapis.com/symbols/sclera/school_3.png',
         background: 'blue',
         page: 'homepage',
+        user: 'gadi800',
+        profile: 'default',
+        row: 1,
+        column: 1,
+        speak: true,
         id: '1'
     },
     {
@@ -15,6 +20,11 @@ export default [
         image: 'https://storage.googleapis.com/symbols/arasaac/ok.png',
         background: 'pink',
         page: 'homepage',
+        user: 'gadi800',
+        profile: 'default',
+        row: 1,
+        column: 2,
+        speak: true,
         id: '2'
     },
     {
@@ -24,6 +34,11 @@ export default [
         image: 'https://storage.googleapis.com/symbols/arasaac/love.png',
         background: 'purple',
         page: 'homepage',
+        user: 'gadi800',
+        profile: 'default',
+        row: 1,
+        column: 3,
+        speak: true,
         id: '3'
     },
     {
@@ -33,6 +48,11 @@ export default [
         image: 'https://storage.googleapis.com/symbols/arasaac/open.png',
         background: 'green',
         page: 'homepage',
+        user: 'gadi800',
+        profile: 'default',
+        row: 1,
+        column: 4,
+        speak: true,
         id: '4'
     },
 ]
