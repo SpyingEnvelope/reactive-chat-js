@@ -22,3 +22,26 @@
 .deleteicon {
     height: 5vh;
 }
+
+.imagesize {
+    width: 8vw;
+    height: 11vh;
+}
+
+@media only screen and  (max-width: 500px) {
+    .imagesize {
+        width: 20vw
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 800px) {
+    .imagesize {
+        width: 16vw
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    .imagesize {
+        width: 10vw
+    }
+}

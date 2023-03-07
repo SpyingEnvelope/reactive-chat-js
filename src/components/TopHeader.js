@@ -25,7 +25,7 @@ const TopHeader = () => {
         className="d-flex flex-column text-center"
         key={Math.random()}
       >
-        <Image src={word.image} style={{ width: "8vw", height: "10vh" }} />
+        <Image src={word.image} className={classes.imagesize} />
         {word.word}
       </Col>
     );

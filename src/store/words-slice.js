@@ -5,8 +5,9 @@ const wordsSlice = createSlice({
     name: "words",
     initialState: {
         words: [],
-        coreBoard: dummy_db,
-        edit: false
+        coreBoard: [],
+        edit: false,
+        updated: false
     },
     reducers: {
         addWord(state, action) {
@@ -22,6 +23,15 @@ const wordsSlice = createSlice({
         },
         changeEdit(state, action) {
             state.edit = action.payload;
+        },
+        setCoreBoard(state, action) {
+            state.coreBoard = action.payload;
+        },
+        updatedTrue(state, action) {
+            state.updated = true
+        },
+        updatedFalse(state, action) {
+            state.updated = false
         }
     }
 });
