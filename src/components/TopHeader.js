@@ -9,14 +9,19 @@ import classes from "./TopHeader.module.css";
 const TopHeader = () => {
   const dispatch = useDispatch();
   const wordsList = useSelector((state) => state.words.words);
-  const { cancel } = useSpeechSynthesis();
+  const { speak, cancel } = useSpeechSynthesis();
 
   const removeWord = () => {
     cancel();
     dispatch(wordsActions.removeWord());
   };
 
-  console.log(wordsList);
+  const playAllWords = () => {
+    cancel();
+    wordsList.forEach(word => {
+      speak({ text: word.word });
+    })
+  }
 
   const displayWords = wordsList.map((word) => {
     return (
@@ -37,7 +42,7 @@ const TopHeader = () => {
       className="d-flex"
       style={{ border: "1px solid black", height: '20vh' }}
     >
-      <Row className="d-flex flex-row overflow-scroll flex-nowrap">
+      <Row className="d-flex flex-row overflow-scroll flex-nowrap" onClick={playAllWords}>
         {displayWords}
       </Row>
       <Row style={{ justifySelf: "flex-end" }}>

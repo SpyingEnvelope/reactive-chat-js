@@ -1,0 +1,23 @@
+.imageRow {
+    width: 20vw; 
+    height: 30vh;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+    .imageRow {
+        width: 80vw
+    }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 800px) {
+    .imageRow {
+        width: 40vw
+    }
+}
+
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+    .imageRow {
+        width: 30vw
+    }
+}

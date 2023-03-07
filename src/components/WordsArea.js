@@ -4,9 +4,10 @@ import { wordsActions } from "../store/words-slice";
 import { modalActions } from "../store/modal-slice";
 import { useSpeechSynthesis } from "react-speech-kit";
 import classes from "./WordsArea.module.css";
-import dummy_db from "./dummy_db";
 import ModalOverlay from "./ModalOverlay";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const WordsArea = () => {
   const { speak, cancel } = useSpeechSynthesis();
@@ -119,16 +120,17 @@ const WordsArea = () => {
         onClick={() =>
           word.visible && !editMode ? addWord({ text: word.text, image: word.image }) : null
         }
-        style={{ backgroundColor: word.background }}
+        style={{ backgroundColor: word.background, opacity: !word.visible && !editMode ? 0 : 1  }}
         key={word['_id']}
       >
         <Card.Img
           variant="top"
           src={word.image}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%"}}
         />
         <Card.Body>
           <Card.Title>{word.text}</Card.Title>
+          { word.visible ? null : <FontAwesomeIcon icon={faEyeSlash} size='lg' color="black" style={{position: 'fixed', transform: 'translateY(-50%) translateX(-50%)'}} />}
         </Card.Body>
         {editMode ? (
           <Button
@@ -149,6 +151,7 @@ const WordsArea = () => {
             Edit
           </Button>
         ) : null}
+        
       </Card>
     );
   });
@@ -162,6 +165,7 @@ const WordsArea = () => {
         backgroundColor: "yellow",
         paddingTop: "10px",
         justifyContent: "space-around",
+        overflow: 'scroll'
       }}
     >
       {word_buttons}

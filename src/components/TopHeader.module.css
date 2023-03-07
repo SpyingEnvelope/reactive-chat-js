@@ -28,7 +28,7 @@
     height: 11vh;
 }
 
-@media only screen and  (max-width: 500px) {
+@media only screen and (max-width: 500px) {
     .imagesize {
         width: 20vw
     }
