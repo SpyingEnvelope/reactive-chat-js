@@ -6,8 +6,8 @@
     position: fixed;
     width: 5% !important;
     height: 10%;
-    transform: translateY(50%) translateX(-20%);
-    right: 0;
+    transform: translateY(50%);
+    right: 50px;
     top: 0;
     opacity: 0.5;
     background-color: white;
@@ -20,7 +20,8 @@
 }
 
 .deleteicon {
-    height: 5vh;
+    height: 50px;
+    width: 50px;
 }
 
 .imagesize {
@@ -42,6 +43,18 @@
 
 @media only screen and (min-width: 800px) and (max-width: 1000px) {
     .imagesize {
-        width: 10vw
+        width: 10vw;
+    }
+    .delete {
+        right: 50px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .imagesize {
+        width: 10vw;
+    }
+    .delete {
+        right: 50px;
     }
 }

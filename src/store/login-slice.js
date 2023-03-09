@@ -5,7 +5,7 @@ const loginSlice = createSlice({
     initialState: {
         isLoggedIn: false,
         username: 'gadi800',
-        requestURL: 'http://localhost:8080/'
+        requestURL: 'http://localhost:8080/',
     },
     reducers: {
         changeLogin(state, action) {

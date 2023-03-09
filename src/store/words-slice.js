@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dummy_db from "../components/dummy_db";
 
 const wordsSlice = createSlice({
     name: "words",
@@ -7,7 +6,9 @@ const wordsSlice = createSlice({
         words: [],
         coreBoard: [],
         edit: false,
-        updated: false
+        updated: false,
+        profile: 'default',
+        page: 'homepage'
     },
     reducers: {
         addWord(state, action) {

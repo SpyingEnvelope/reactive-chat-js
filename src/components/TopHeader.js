@@ -26,7 +26,7 @@ const TopHeader = () => {
   const displayWords = wordsList.map((word) => {
     return (
       <Col
-        style={{ width: "20%", height: "50%", paddingTop: "5vh" }}
+        style={{ height: "50%", paddingTop: "5vh" }}
         className="d-flex flex-column text-center"
         key={Math.random()}
       >
@@ -46,8 +46,8 @@ const TopHeader = () => {
         {displayWords}
       </Row>
       <Row style={{ justifySelf: "flex-end" }}>
-        <button onClick={removeWord} className={classes.delete}>
-          <FontAwesomeIcon icon={faDeleteLeft} className={classes.deleteicon}/>
+        <button onClick={removeWord} className={classes.delete} >
+          <FontAwesomeIcon icon={faDeleteLeft} className={classes.deleteicon} />
         </button>
       </Row>
     </Container>

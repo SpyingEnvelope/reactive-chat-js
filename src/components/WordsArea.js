@@ -4,10 +4,10 @@ import { wordsActions } from "../store/words-slice";
 import { modalActions } from "../store/modal-slice";
 import { useSpeechSynthesis } from "react-speech-kit";
 import classes from "./WordsArea.module.css";
-import ModalOverlay from "./ModalOverlay";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import CreateButton from "./CreateButton";
 
 const WordsArea = () => {
   const { speak, cancel } = useSpeechSynthesis();
@@ -15,6 +15,8 @@ const WordsArea = () => {
   const editMode = useSelector((state) => state.words.edit);
   const username = useSelector((state) => state.login.username);
   const updated = useSelector((state) => state.words.updated);
+  const profileName = useSelector((state) => state.words.profile);
+  const page = useSelector((state) => state.words.page);
   const requestURL = useSelector((state) => state.login.requestURL);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -113,7 +115,9 @@ const WordsArea = () => {
     );
   }
 
-  const word_buttons = coreBoard.map((word) => {
+  const filteredBoard = coreBoard.filter((word) => word.profile == profileName).filter((word) => word.page == page);
+
+  const word_buttons = filteredBoard.map((word) => {
     return (
       <Card
         className={classes.cardbutton}
@@ -169,6 +173,7 @@ const WordsArea = () => {
       }}
     >
       {word_buttons}
+      {editMode ? <CreateButton styleButton={classes.cardbutton}/> : null}
     </Container>
   );
 };

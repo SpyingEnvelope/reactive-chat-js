@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Container, Image, Button, Modal, Form, Row } from "react-bootstrap";
+import { Image, Button, Modal, Form, Row, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { modalActions } from "../store/modal-slice";
 import { wordsActions } from "../store/words-slice";
+import { confirm } from "react-bootstrap-confirmation";
 import ImageSearch from "./ImageSearch";
 
-const ModalOverlay = () => {
+const EditModal = () => {
   const showModal = useSelector((state) => state.modal.show);
   const data = useSelector((state) => state.modal.data);
   const [text, setText] = useState(data.text);
@@ -56,6 +57,55 @@ const ModalOverlay = () => {
 
   const imageOff = () => {
     setReplaceImage(false);
+  };
+
+  const preventEnter = (event) => {
+    event.preventDefault();
+    updateData();
+  };
+
+  const deleteHandler = async () => {
+    const result = await confirm('Are you sure you want to delete?'); // Confirm deletion
+    if (!result) {
+      return;
+    };
+
+    setError(false);
+    setUpdating(true);
+    if (!data.id) {
+      setError("id needed for deletion");
+      return;
+    }
+
+    try {
+      const request = await fetch(requestURL + "api/delete/", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: data.id,
+        }),
+      });
+
+      if (!request.ok) {
+        throw new Error("failed to delete");
+      }
+
+      const response = await request.json();
+
+      if (response.error) {
+        throw new Error("failed to delete");
+      }
+
+      setUpdating(false);
+      setError(false);
+      dispatch(modalActions.hideModal());
+      dispatch(wordsActions.updatedTrue());
+    } catch (error) {
+      setUpdating(false);
+      setError("Failed to delete. Please try again later.");
+    }
   };
 
   const cancelModal = () => {
@@ -111,9 +161,7 @@ const ModalOverlay = () => {
   };
 
   if (replaceImage) {
-    return (
-      <ImageSearch imageOff={imageOff} setImage={setImage}/>
-    );
+    return <ImageSearch imageOff={imageOff} setImage={setImage} />;
   }
 
   return (
@@ -127,7 +175,8 @@ const ModalOverlay = () => {
         <Modal.Title>Edit</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        {error ? <p style={{ color: "red" }}>{error}</p> : null}
+        <Form onSubmit={preventEnter}>
           <Form.Group controlId="text">
             <Form.Label>
               <strong>Text</strong>
@@ -201,71 +250,94 @@ const ModalOverlay = () => {
             </Form.Text>
           </Row>
           <Form.Check type="switch" onChange={speakHandler} checked={speak} />
+
+          <Row style={{ paddingTop: "10px", paddingBottom: "10px" }}>
+            <Form.Label>
+              <strong>Background Color</strong>
+            </Form.Label>
+          </Row>
+          <Form.Check
+            inline
+            label="Pink"
+            type="radio"
+            name="background"
+            value="pink"
+            onChange={backgroundHandler}
+            checked={background == "pink" ? true : false}
+          />
+          <Form.Check
+            inline
+            label="Blue"
+            type="radio"
+            name="background"
+            value="blue"
+            onChange={backgroundHandler}
+            checked={background == "blue" ? true : false}
+          />
+          <Form.Check
+            inline
+            label="Purple"
+            type="radio"
+            name="background"
+            value="purple"
+            onChange={backgroundHandler}
+            checked={background == "purple" ? true : false}
+          />
+          <Form.Check
+            inline
+            label="Green"
+            type="radio"
+            name="background"
+            value="green"
+            onChange={backgroundHandler}
+            checked={background == "green" ? true : false}
+          />
+          <Form.Check
+            inline
+            label="White"
+            type="radio"
+            name="background"
+            value="white"
+            onChange={backgroundHandler}
+            checked={background == "white" ? true : false}
+          />
         </Form>
-        <Row style={{ paddingTop: "10px", paddingBottom: "10px" }}>
-          <Form.Label>
-            <strong>Background Color</strong>
-          </Form.Label>
-        </Row>
-        <Form.Check
-          inline
-          label="Pink"
-          type="radio"
-          name="background"
-          value="pink"
-          onChange={backgroundHandler}
-          checked={background == "pink" ? true : false}
-        />
-        <Form.Check
-          inline
-          label="Blue"
-          type="radio"
-          name="background"
-          value="blue"
-          onChange={backgroundHandler}
-          checked={background == "blue" ? true : false}
-        />
-        <Form.Check
-          inline
-          label="Purple"
-          type="radio"
-          name="background"
-          value="purple"
-          onChange={backgroundHandler}
-          checked={background == "purple" ? true : false}
-        />
-        <Form.Check
-          inline
-          label="Green"
-          type="radio"
-          name="background"
-          value="green"
-          onChange={backgroundHandler}
-          checked={background == "green" ? true : false}
-        />
-        <Form.Check
-          inline
-          label="White"
-          type="radio"
-          name="background"
-          value="white"
-          onChange={backgroundHandler}
-          checked={background == "white" ? true : false}
-        />
+        <Container
+          className="d-flex flex-row"
+          style={{ justifyContent: "flex-end" }}
+        >
+          <Row style={{ paddingLeft: "20px", paddingRight: '20px'}}>
+            <Button
+              variant="danger"
+              disabled={updating ? true : false}
+              onClick={deleteHandler}
+              style={{ padding: "15px" }}
+            >
+              Delete
+            </Button>
+          </Row>
+          <Row style={{ paddingLeft: "20px", paddingRight: '20px' }}>
+            <Button
+              variant="dark"
+              onClick={cancelModal}
+              disabled={updating ? true : false}
+            >
+              Cancel
+            </Button>
+          </Row>
+          <Row style={{ paddingLeft: "20px" }}>
+            <Button
+              variant="success"
+              onClick={updateData}
+              disabled={updating ? true : false}
+            >
+              {updating ? "Updating button" : "Submit"}
+            </Button>
+          </Row>
+        </Container>
       </Modal.Body>
-      <Button
-        variant="success"
-        onClick={updateData}
-        disabled={updating ? true : false}
-      >
-        {updating ? "Updating button" : "Submit"}
-      </Button>
-      <Button variant="danger" onClick={cancelModal}>
-        Cancel
-      </Button>
-      {error ? error : null}
     </Modal>
   );
 };
 
-export default ModalOverlay;
+export default EditModal;
