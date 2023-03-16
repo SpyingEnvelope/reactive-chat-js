@@ -1,0 +1,18 @@
+.background-reactive {
+    background-color: #1a202f;
+    min-height: 100vh;
+}
+
+.logo {
+    width: 40vw;
+}
+
+.alpha {
+    color: yellow;
+    position: relative;
+}
+
+.form-label {
+    color: white;
+    padding-top: 10px;
+}

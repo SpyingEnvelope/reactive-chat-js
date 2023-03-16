@@ -33,6 +33,9 @@ const wordsSlice = createSlice({
         },
         updatedFalse(state, action) {
             state.updated = false
+        },
+        changePage(state, action) {
+            state.page = action.payload;
         }
     }
 });

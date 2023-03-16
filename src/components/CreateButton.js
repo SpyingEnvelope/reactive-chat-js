@@ -14,7 +14,7 @@ const CreateButton = (props) => {
   return (
     <Button
       className={`${props.styleButton} d-flex align-items-center justify-content-center`}
-      style={{ position: "fixed", right: "2%" }}
+      style={{ position: "fixed", right: "10px" }}
       variant="light"
       onClick={createOn}
     >

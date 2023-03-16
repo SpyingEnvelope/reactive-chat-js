@@ -6,7 +6,7 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import classes from "./WordsArea.module.css";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash, faFolder } from "@fortawesome/free-solid-svg-icons";
 import CreateButton from "./CreateButton";
 
 const WordsArea = () => {
@@ -24,17 +24,13 @@ const WordsArea = () => {
   const dispatch = useDispatch();
 
   const addWord = (word) => {
-    speak({ text: word.text });
+    if (word.speak) {
+      speak({ text: word.text });
+    }
+    if (word.type == "folder") {
+      dispatch(wordsActions.changePage(word.text));
+    }
     dispatch(wordsActions.addWord({ word: word.text, image: word.image }));
-  };
-
-  const removeWord = () => {
-    cancel();
-    dispatch(wordsActions.removeWord());
-  };
-
-  const removeAllWords = () => {
-    dispatch(wordsActions.removeAllWords());
   };
 
   const modalHandler = (data) => {
@@ -60,9 +56,9 @@ const WordsArea = () => {
       }
 
       const response = await request.json();
-      dispatch(wordsActions.setCoreBoard(response))
+      dispatch(wordsActions.setCoreBoard(response));
       setLoading(false);
-      console.log(response)
+      console.log(response);
       if (response.error) {
         throw new Error("Could not retrieve data. Please try again");
       }
@@ -115,31 +111,53 @@ const WordsArea = () => {
     );
   }
 
-  const filteredBoard = coreBoard.filter((word) => word.profile == profileName).filter((word) => word.page == page);
+  const filteredBoard = coreBoard
+    .filter((word) => word.profile == profileName)
+    .filter((word) => word.page == page);
 
   const word_buttons = filteredBoard.map((word) => {
     return (
       <Card
         className={classes.cardbutton}
         onClick={() =>
-          word.visible && !editMode ? addWord({ text: word.text, image: word.image }) : null
+          word.visible && !editMode
+            ? addWord({
+                text: word.text,
+                image: word.image,
+                speak: word.speak,
+                type: word.type,
+              })
+            : null
         }
-        style={{ backgroundColor: word.background, opacity: !word.visible && !editMode ? 0 : 1  }}
-        key={word['_id']}
+        style={{
+          backgroundColor: word.background,
+          opacity: !word.visible && !editMode ? 0 : 1,
+        }}
+        key={word["_id"]}
       >
         <Card.Img
           variant="top"
           src={word.image}
-          style={{ width: "100%", height: "100%"}}
+          style={{ width: "100%", height: "100%" }}
         />
         <Card.Body>
           <Card.Title>{word.text}</Card.Title>
-          { word.visible ? null : <FontAwesomeIcon icon={faEyeSlash} size='lg' color="black" style={{position: 'fixed', transform: 'translateY(-50%) translateX(-50%)'}} />}
+          {word.visible ? null : (
+            <FontAwesomeIcon
+              icon={faEyeSlash}
+              size="lg"
+              color="black"
+              style={{
+                position: "fixed",
+                transform: "translateY(-50%) translateX(-50%)",
+              }}
+            />
+          )}
         </Card.Body>
         {editMode ? (
           <Button
             variant="light"
-            style={{ position: "fixed" }}
+            style={{ position: "absolute" }}
             onClick={() => {
               modalHandler({
                 text: word.text,
@@ -148,14 +166,15 @@ const WordsArea = () => {
                 image: word.image,
                 background: word.background,
                 speak: word.speak,
-                id: word['_id'],
+                id: word["_id"],
               });
             }}
           >
             Edit
           </Button>
+        ) : word.type == "folder" ? (
+          <FontAwesomeIcon icon={faFolder} style={{ position: "absolute" }} />
         ) : null}
-        
       </Card>
     );
   });
@@ -163,17 +182,16 @@ const WordsArea = () => {
   return (
     <Container
       fluid
-      className="h-75 d-flex"
+      className="h-75 d-flex flex-column justify-content-between"
       style={{
         border: "1px solid black",
-        backgroundColor: "yellow",
+        backgroundColor: '#1a202f',
         paddingTop: "10px",
-        justifyContent: "space-around",
-        overflow: 'scroll'
+        overflow: "scroll",
       }}
     >
-      {word_buttons}
-      {editMode ? <CreateButton styleButton={classes.cardbutton}/> : null}
+      <Row className="d-flex">{word_buttons}</Row>
+      {editMode ? <CreateButton /> : null}
     </Container>
   );
 };

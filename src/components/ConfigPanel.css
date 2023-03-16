@@ -8,6 +8,31 @@
     border: none;
 }
 
+.home-button {
+    background: none;
+    color: white;
+    border: none;
+    margin: auto;
+}
+
+.trash-button {
+    background: none;
+    color: white;
+    border: none;
+}
+
 .container-10 {
     height: 5vh
+}
+
+@media only screen and (max-height: 330px) {
+    .container-10 {
+        height: 10vh;
+    }
+}
+
+@media only screen and (min-height: 331px) and (max-height: 500px) {
+    .container-10 {
+        height: 7vh;
+    }
 }
