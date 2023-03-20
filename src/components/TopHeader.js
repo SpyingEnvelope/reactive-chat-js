@@ -4,19 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { wordsActions } from "../store/words-slice";
 import { useSpeechSynthesis } from "react-speech-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
-import { useLongPress } from "use-long-press";
+import { faDeleteLeft, faTrash } from "@fortawesome/free-solid-svg-icons";
 import classes from "./TopHeader.module.css";
 
 const TopHeader = () => {
   const dispatch = useDispatch();
   const wordsList = useSelector((state) => state.words.words);
   const { speak, cancel } = useSpeechSynthesis();
-
-  const bind = useLongPress(() => {
-    cancel();
-    dispatch(wordsActions.removeAllWords());
-  });
 
   const removeWord = () => {
     cancel();
@@ -30,11 +24,16 @@ const TopHeader = () => {
     });
   };
 
+  const removeAllWords = () => {
+    cancel();
+    dispatch(wordsActions.removeAllWords());
+  };
+
   useEffect(() => {
     if (displayWords.length > 0) {
-      const lastElementId = displayWords[displayWords.length - 1].props.id
-      const element = document.getElementById(lastElementId)
-      element.scrollIntoView({behavior: 'smooth'})
+      const lastElementId = displayWords[displayWords.length - 1].props.id;
+      const element = document.getElementById(lastElementId);
+      element.scrollIntoView({ behavior: "smooth" });
     }
   }, [wordsList]);
 
@@ -42,9 +41,13 @@ const TopHeader = () => {
     return (
       <Col
         style={{ height: "50%", paddingTop: "5vh" }}
-        className="d-flex flex-column text-center"
+        className="d-flex flex-column text-center align-items-center"
         key={index}
         id={index}
+        xs={6}
+        sm={4}
+        md={3}
+        lg={2}
       >
         <Image src={word.image} className={classes.imagesize} />
         {word.word}
@@ -56,17 +59,22 @@ const TopHeader = () => {
     <Container
       fluid
       className="d-flex overflow-hidden"
-      style={{ border: "1px solid black", height: "20vh" }}
+      style={{ border: "1px solid black", height: "20vh", backgroundColor: 'white' }}
     >
       <Row
-        className="d-flex flex-row overflow-scroll flex-nowrap"
+        className="d-flex flex-row overflow-scroll flex-nowrap justify-content-start"
+        style={{width: '90%'}}
         onClick={playAllWords}
+        xs={10}
       >
         {displayWords}
       </Row>
-      <Row style={{ justifySelf: "flex-end" }}>
-        <button {...bind()} onClick={removeWord} className={classes.delete}>
+      <Row xs={2} style={{ flexGrow: 1}}>
+        <button onClick={removeWord} className={classes.buttons}>
           <FontAwesomeIcon icon={faDeleteLeft} className={classes.deleteicon} />
+        </button>
+        <button className={classes.buttons} onClick={removeAllWords}>
+          <FontAwesomeIcon icon={faTrash} className={classes.deleteicon} />
         </button>
       </Row>
     </Container>

@@ -8,6 +8,10 @@
     border: none;
 }
 
+.edit-button:disabled {
+    color: #bdb9b9;
+}
+
 .home-button {
     background: none;
     color: white;

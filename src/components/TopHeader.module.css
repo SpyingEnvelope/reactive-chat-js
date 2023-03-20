@@ -14,6 +14,10 @@
     border: none;
 }
 
+.deleterow {
+    width: 13%
+}
+
 .delete:hover {
     background-color: white !important;
     border: none !important;
@@ -22,6 +26,15 @@
 .deleteicon {
     height: 50px;
     width: 50px;
+}
+
+.buttons {
+    background: white;
+    border: 1px solid black;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .imagesize {

@@ -63,7 +63,6 @@ const LoginForm = (props) => {
       }
 
       const response = await request.json();
-      console.log(response);
       if (response.error) {
         throw new Error("Username or password was not found");
       }
@@ -115,6 +114,7 @@ const LoginForm = (props) => {
             type="text"
             placeholder="Enter username"
             className="text-center"
+            required
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
@@ -123,6 +123,7 @@ const LoginForm = (props) => {
             type="password"
             placeholder="Enter password"
             className="text-center"
+            required
           />
         </Form.Group>
         <Button

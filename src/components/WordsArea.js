@@ -26,11 +26,11 @@ const WordsArea = () => {
   const addWord = (word) => {
     if (word.speak) {
       speak({ text: word.text });
+      dispatch(wordsActions.addWord({ word: word.text, image: word.image }));
     }
     if (word.type == "folder") {
       dispatch(wordsActions.changePage(word.text));
     }
-    dispatch(wordsActions.addWord({ word: word.text, image: word.image }));
   };
 
   const modalHandler = (data) => {
@@ -56,12 +56,13 @@ const WordsArea = () => {
       }
 
       const response = await request.json();
-      dispatch(wordsActions.setCoreBoard(response));
-      setLoading(false);
-      console.log(response);
+
       if (response.error) {
         throw new Error("Could not retrieve data. Please try again");
       }
+
+      dispatch(wordsActions.setCoreBoard(response));
+      setLoading(false);
     } catch (e) {
       setError("Could not retrieve data. Please try again later.");
       setLoading(false);

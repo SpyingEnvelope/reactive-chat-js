@@ -13,11 +13,19 @@ import classes from "./ImageSearch.module.css";
 
 const ImageSearch = (props) => {
   const [error, setError] = useState(false);
+  const [special, setSpecial] = useState(false);
   const [data, setData] = useState([]);
   const [searched, setSearched] = useState(false);
   const [retrieving, setRetrieving] = useState(false);
 
   const retrieveData = async (value) => {
+    const testRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
+    if (testRegex.test(value)) {
+      setSpecial(true);
+      return
+    }
+    setSpecial(false);
+    setData([]);
     setRetrieving(true);
     try {
       const request = await fetch(
@@ -29,8 +37,6 @@ const ImageSearch = (props) => {
       }
 
       const response = await request.json();
-      console.log(request);
-      console.log(response);
 
       setSearched(true);
       setError(false);
@@ -108,7 +114,8 @@ const ImageSearch = (props) => {
           Search
         </Button>
       </Form>
-      {retrieving ? (
+      {special && <p style={{color: 'red'}}>Search field cannot contain special characters</p>}
+      {retrieving && (
         <>
           <Row style={{ paddingTop: "20px" }}>
             <Spinner animation="grow" role="status" size="lg" />
@@ -117,7 +124,7 @@ const ImageSearch = (props) => {
             <h1>Retrieving data....</h1>
           </Row>{" "}
         </>
-      ) : null}
+      )}
       {searched && dataZero ? <h1>No results found</h1> : null}
       {displayData}
       { dataZero && <Row style={{padding: '10px'}} />}

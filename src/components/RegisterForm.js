@@ -91,6 +91,8 @@ const RegisterForm = (props) => {
         setRegisterError("Email is already in use");
       } else if (error.message == "username taken") {
         setRegisterError("Username is already in use");
+      } else if (error.message == 'missing fields') {
+        setRegisterError("Some fields are missing")
       } else {
         setRegisterError("Unknown error occurred. Please try again later.");
       }
@@ -122,6 +124,7 @@ const RegisterForm = (props) => {
             type="text"
             placeholder="Enter username"
             className="text-center"
+            required
           />
           <Form.Text>Username cannot contain special characters</Form.Text>
         </Form.Group>
@@ -131,6 +134,7 @@ const RegisterForm = (props) => {
             type="email"
             placeholder="Enter email"
             className="text-center"
+            required
           />
         </Form.Group>
         <Form.Group controlId="formPassword">
@@ -139,6 +143,7 @@ const RegisterForm = (props) => {
             type="password"
             placeholder="Enter password"
             className="text-center"
+            required
           />
         </Form.Group>
         <Form.Group controlId="formRepeat">
@@ -147,6 +152,7 @@ const RegisterForm = (props) => {
             type="password"
             placeholder="Enter password"
             className="text-center"
+            required
           />
         </Form.Group>
         <Button

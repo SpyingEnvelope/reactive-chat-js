@@ -5,7 +5,8 @@ const modalSlice = createSlice({
     initialState: {
         data: {},
         show: false,
-        create: false
+        create: false,
+        report: false
     },
     reducers: {
         setModalData(state, action) {
@@ -22,6 +23,12 @@ const modalSlice = createSlice({
         },
         hideCreate(state, action) {
             state.create = false
+        },
+        showReport(state, action) {
+            state.report = true
+        },
+        hideReport(state, action) {
+            state.report = false
         }
     }
 });
