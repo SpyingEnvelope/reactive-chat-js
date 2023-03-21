@@ -5,7 +5,7 @@ const loginSlice = createSlice({
     initialState: {
         isLoggedIn: false,
         username: '',
-        requestURL: 'http://localhost:8080/',
+        requestURL: 'https://reactive-chat-backend-vqvzr.ondigitalocean.app/',
     },
     reducers: {
         changeLogin(state, action) {
