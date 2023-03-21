@@ -18,6 +18,7 @@ const WordsArea = () => {
   const profileName = useSelector((state) => state.words.profile);
   const page = useSelector((state) => state.words.page);
   const requestURL = useSelector((state) => state.login.requestURL);
+  const isLogged = useSelector((state) => state.login.isLoggedIn)
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -29,6 +30,7 @@ const WordsArea = () => {
       dispatch(wordsActions.addWord({ word: word.text, image: word.image }));
     }
     if (word.type == "folder") {
+      dispatch(wordsActions.addHistory(word.text))
       dispatch(wordsActions.changePage(word.text));
     }
   };
@@ -70,7 +72,7 @@ const WordsArea = () => {
   };
 
   useEffect(() => {
-    if (coreBoard.length == 0) {
+    if (coreBoard.length == 0 && isLogged) {
       retrieveCoreData();
     }
 
@@ -113,8 +115,13 @@ const WordsArea = () => {
   }
 
   const filteredBoard = coreBoard
-    .filter((word) => word.profile == profileName)
-    .filter((word) => word.page == page);
+    // .filter((word) => word.profile == profileName)
+    .filter((word) => word.page == page)
+    .sort((a,b) => {
+      const aDate = new Date(a.date);
+      const bDate = new Date(b.date);
+      return aDate.getTime() - bDate.getTime();
+    })
 
   const word_buttons = filteredBoard.map((word) => {
     return (
@@ -139,7 +146,7 @@ const WordsArea = () => {
         <Card.Img
           variant="top"
           src={word.image}
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "50%" }}
         />
         <Card.Body>
           <Card.Title>{word.text}</Card.Title>
@@ -183,7 +190,7 @@ const WordsArea = () => {
   return (
     <Container
       fluid
-      className="h-75 d-flex flex-column justify-content-between"
+      className={`h-75 d-flex flex-column justify-content-between `}
       style={{
         border: "1px solid black",
         backgroundColor: '#1a202f',

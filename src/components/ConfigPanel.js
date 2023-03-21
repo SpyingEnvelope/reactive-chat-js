@@ -1,24 +1,26 @@
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { wordsActions } from "../store/words-slice";
 import { modalActions } from "../store/modal-slice";
-import { useSpeechSynthesis } from "react-speech-kit";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPenToSquare,
   faHouse,
   faMinimize,
   faMaximize,
-  faBug
+  faBug,
+  faArrowLeft
 } from "@fortawesome/free-solid-svg-icons";
 import "./ConfigPanel.css";
 import { useState } from "react";
 
 const ConfigPanel = (props) => {
   const [fullscreen, setFullscreen] = useState(false);
-  const { cancel } = useSpeechSynthesis();
 
   const editMode = useSelector((state) => state.words.edit);
+  const history = useSelector((state) => state.words.history)
+  const histLength = history.length;
+  const histLengthBool = histLength > 0;
   const dispatch = useDispatch();
 
   const editTrue = () => {
@@ -31,6 +33,7 @@ const ConfigPanel = (props) => {
 
   const goHome = () => {
     dispatch(wordsActions.changePage("homepage"));
+    dispatch(wordsActions.removeAllHistory());
   };
 
   const showReport = () => {
@@ -46,11 +49,25 @@ const ConfigPanel = (props) => {
     setFullscreen((prevState) => !prevState);
   };
 
+  const backHandler = () => {
+    if (histLength == 0) {
+      dispatch(wordsActions.removeAllHistory());
+      dispatch(wordsActions.changePage('homepage'));
+    } else if (histLength == 1) {
+      dispatch(wordsActions.removeAllHistory());
+      dispatch(wordsActions.changePage('homepage'));
+    } else {
+      dispatch(wordsActions.changePage(history[history.length - 2]))
+      dispatch(wordsActions.removeLastHistory());
+    }
+  }
+
   return (
     <Container
       fluid
-      className="container-background d-flex justify-content-end align-items-center container-10"
+      className="container-background d-flex justify-content-between align-items-center container-10"
     >
+      {!editMode && <button className="back-button" disabled={!histLengthBool} onClick={backHandler}><FontAwesomeIcon icon={faArrowLeft} /> Back</button>}
       {!editMode && <button className="trash-button" onClick={fullscreenHandler}>
         <FontAwesomeIcon icon={fullscreen ? faMinimize : faMaximize} />
         {fullscreen ? " Minimize" : " Fullscreen"}

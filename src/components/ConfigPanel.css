@@ -16,13 +16,23 @@
     background: none;
     color: white;
     border: none;
-    margin: auto;
+    /* margin: auto; */
 }
 
 .trash-button {
     background: none;
     color: white;
     border: none;
+}
+
+.back-button {
+    background: none;
+    color: white;
+    border: none;
+}
+
+.back-button:disabled {
+    color: #bdb9b9;
 }
 
 .container-10 {

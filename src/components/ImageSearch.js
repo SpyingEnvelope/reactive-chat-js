@@ -19,7 +19,7 @@ const ImageSearch = (props) => {
   const [retrieving, setRetrieving] = useState(false);
 
   const retrieveData = async (value) => {
-    const testRegex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
+    const testRegex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
     if (testRegex.test(value)) {
       setSpecial(true);
       return

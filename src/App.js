@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import MainPage from "./pages/MainPage/MainPage";
+import MainPage, {loader as mainLoader} from "./pages/MainPage/MainPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const router = createBrowserRouter([
     path: "/",
     children: [
       { index: true, element: <LoginPage /> },
-      { path: "/reactivechat/:user", element: <MainPage /> },
+      { path: "/reactivechat/:user", element: <MainPage />, loader: mainLoader },
     ],
   },
 ]);

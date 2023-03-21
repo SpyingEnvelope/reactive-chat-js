@@ -8,7 +8,8 @@ const wordsSlice = createSlice({
         edit: false,
         updated: false,
         profile: 'default',
-        page: 'homepage'
+        page: 'homepage',
+        history: []
     },
     reducers: {
         addWord(state, action) {
@@ -36,6 +37,17 @@ const wordsSlice = createSlice({
         },
         changePage(state, action) {
             state.page = action.payload;
+        },
+        addHistory(state, action) {
+            state.history = [...state.history, action.payload]
+        },
+        removeLastHistory(state, action) {
+            const histArray = state.history;
+            histArray.pop();
+            state.history = histArray;
+        },
+        removeAllHistory(state, action) {
+            state.history = [];
         }
     }
 });

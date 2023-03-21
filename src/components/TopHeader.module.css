@@ -42,10 +42,31 @@
     height: 11vh;
 }
 
+.topheader {
+    min-height: 20vh;
+  }
+
+.toprow {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.toprow::-webkit-scrollbar {
+    display: none;
+  }
+
 @media only screen and (max-width: 500px) {
     .imagesize {
         width: 20vw
     }
+   
+}
+
+@media only screen and (max-height: 500px) {
+    .topheader {
+        min-height: 25vh;
+    }
+   
 }
 
 @media only screen and (min-width: 500px) and (max-width: 800px) {

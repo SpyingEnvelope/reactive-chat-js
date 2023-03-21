@@ -58,11 +58,11 @@ const TopHeader = () => {
   return (
     <Container
       fluid
-      className="d-flex overflow-hidden"
-      style={{ border: "1px solid black", height: "20vh", backgroundColor: 'white' }}
+      className={`d-flex overflow-hidden ${classes.topheader}`}
+      style={{ border: "1px solid black", backgroundColor: 'white' }}
     >
       <Row
-        className="d-flex flex-row overflow-scroll flex-nowrap justify-content-start"
+        className={`d-flex flex-row overflow-scroll flex-nowrap justify-content-start ${classes.toprow}`}
         style={{width: '90%'}}
         onClick={playAllWords}
         xs={10}

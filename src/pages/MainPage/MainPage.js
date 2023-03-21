@@ -6,7 +6,6 @@ import WordsArea from "../../components/WordsArea";
 import ConfigPanel from "../../components/ConfigPanel";
 import EditModal from "../../components/EditModal";
 import CreateModal from "../../components/CreateModal";
-import classes from "./MainPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ReportModal from "../../components/ReportModal";
@@ -38,3 +37,7 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+export function loader() {
+ return null
+}
