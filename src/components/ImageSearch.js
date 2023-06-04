@@ -8,6 +8,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useState } from "react";
+import { useSelector} from "react-redux";
 
 import classes from "./ImageSearch.module.css";
 
@@ -17,6 +18,7 @@ const ImageSearch = (props) => {
   const [data, setData] = useState([]);
   const [searched, setSearched] = useState(false);
   const [retrieving, setRetrieving] = useState(false);
+  const requestURL = useSelector((state) => state.login.requestURL);
 
   const retrieveData = async (value) => {
     const testRegex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
@@ -29,7 +31,7 @@ const ImageSearch = (props) => {
     setRetrieving(true);
     try {
       const request = await fetch(
-        `https://symbotalkapiv1.azurewebsites.net/search/?name=${value}&lang=en&repo=all&limit=10`
+        requestURL + `api/search/images?query=${value}`
       );
 
       if (!request.ok) {
@@ -38,10 +40,15 @@ const ImageSearch = (props) => {
 
       const response = await request.json();
 
+      if (response.error) {
+        throw new Error("failed to authenticate")
+      }
+
+      console.log(response);
       setSearched(true);
       setError(false);
       setRetrieving(false);
-      setData(response);
+      setData(response.icons);
     } catch (error) {
       if (error != "req failed") {
         setSearched(true);
@@ -78,10 +85,10 @@ const ImageSearch = (props) => {
       <Row
         className={classes.imageRow}
         key={result.id}
-        onClick={() => imageHandler(result["image_url"])}
+        onClick={() => imageHandler(result["thumbnail_url"])}
       >
         <Image
-          src={result["image_url"]}
+          src={result["thumbnail_url"]}
           style={{ maxWidth: "100%", maxHeight: "100%", border: '1px solid black' }}
         />
       </Row>

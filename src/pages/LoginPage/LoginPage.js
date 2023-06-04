@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     return (
         <Container fluid className="w-100 background-reactive d-flex flex-column justify-content-center text-center align-items-center">
-            <Row><p className='alpha'>Alpha v1.0.0</p></Row>
+            <Row><p className='alpha'>Alpha v1.1.1</p></Row>
             <Row><Image src={logo} className='logo'/></Row>
             {login && <LoginForm registerOn={registerOn} />}
             {register && <RegisterForm loginOn={registerOff} />}

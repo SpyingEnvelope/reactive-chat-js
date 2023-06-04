@@ -37,6 +37,7 @@ const CreateModal = () => {
     setError(false);
     if (text == "") {
       setError("Text cannot be left empty");
+      setCreating(false);
       return;
     }
     try {
