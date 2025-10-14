@@ -1,4 +1,4 @@
-# Reactive Chat is a WIP
+# Reactive Chat
 
 ## Reactive Chat is currently live!
 
